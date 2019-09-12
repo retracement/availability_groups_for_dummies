@@ -1,2 +1,2 @@
-# availability_groups_for_dummies
+# Availability Groups for Dummies
 Supporting materials and slides for my Availability Groups for Dummies presentation
