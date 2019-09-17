@@ -1,0 +1,24 @@
+*****CLUSTER AUDIT*****
+
+
+$cluster=get-cluster
+"Cluster '$cluster'"|out-file C:\cluster_audit.txt
+get-clustergroup|ForEach-Object {
+$group = $_
+"****************************************************************************************************"
+"Cluster Group '$_'"
+"****************************************************************************************************"
+$group|ft -auto -property *
+"----------------------------------------------------------------------------------------------------"
+"'$_' Group Resources"
+"----------------------------------------------------------------------------------------------------"
+$group|Get-ClusterResource|ft -auto -property Name,ResourceType,OwnerNode,State,DeadlockTimeout,IsAlivePollInterval,LooksAlivePollInterval,MonitorProcessId,PendingTimeout,RestartAction,RestartDelay,RestartPeriod,RestartThreshold,RetryPeriodOnFailure,SeparateMonitor
+"----------------------------------------------------------------------------------------------------"
+"'$_' Group Resource Dependencies"
+"----------------------------------------------------------------------------------------------------"
+$group|Get-ClusterResource|Get-ClusterResourceDependency|ft -auto -property *
+"----------------------------------------------------------------------------------------------------"
+"'$_' Group Resource Parameters"
+"----------------------------------------------------------------------------------------------------"
+$group|Get-ClusterResource|Get-ClusterParameter|ft -auto -property Name,IsReadOnly,ParameterType,Value -groupby  clusterobject
+}|out-file C:\cluster_audit.txt -append
