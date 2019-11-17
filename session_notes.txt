@@ -1,0 +1,9 @@
+Discussed the problem I hit when creating certificate from file and that there was no encrypt by master when doing so. Need to detail that.
+
+Question about MSAs and GMSAs that might be able to overcome the security issues and avoid using certificates?
+- I said that if it was possible to create a login from the MSA or GMSA (so that you could grant connect) then yes that should be great -so you are not messing about with certificates. However I don't think that is possible. Must look this up.
+- Note that you GMSAs are mentioned in the feature versions slide - so need to validated that is correct for AGs and not just SQL Server/ Windows.
+
+Erland mentioned direct seeding which we try during the teardown and GUI deploy. This should really be part of the demo for the GUI deploy.
+
+I did my readonly routing demo after the backups on secondary demo -and for both did not do the slides
