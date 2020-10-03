@@ -112,16 +112,16 @@ GO
 
 -- Restore source to future secondaries
 :CONNECT SERVER3
-RESTORE DATABASE [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.bak' WITH NORECOVERY, STATS = 100
+RESTORE DATABASE [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.bak' WITH NORECOVERY, REPLACE, STATS = 100
 GO
 :CONNECT SERVER3
-RESTORE LOG [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.trn' WITH NORECOVERY, STATS = 100
+RESTORE LOG [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.trn' WITH NORECOVERY, REPLACE, STATS = 100
 GO
 :CONNECT SERVER4
-RESTORE DATABASE [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.bak' WITH NORECOVERY, STATS = 100
+RESTORE DATABASE [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.bak' WITH NORECOVERY, REPLACE, STATS = 100
 GO
 :CONNECT SERVER4
-RESTORE LOG [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.trn' WITH NORECOVERY, STATS = 100
+RESTORE LOG [MyAGDB1] FROM DISK = '\\SERVER1\backuppath\MyAGDB1.trn' WITH NORECOVERY, REPLACE, STATS = 100
 GO
 
 
@@ -138,8 +138,6 @@ REPLICA ON N'SERVER2\SQL2016' WITH (ENDPOINT_URL = N'TCP://server2.retracement.m
 	N'SERVER3\SQL2016' WITH (ENDPOINT_URL = N'TCP://SERVER3.retracement.me:5022', FAILOVER_MODE = AUTOMATIC, AVAILABILITY_MODE = SYNCHRONOUS_COMMIT, BACKUP_PRIORITY = 50, SECONDARY_ROLE(ALLOW_CONNECTIONS = NO)),
 	N'SERVER4\SQL2016' WITH (ENDPOINT_URL = N'TCP://SERVER4.retracement.me:5022', FAILOVER_MODE = AUTOMATIC, AVAILABILITY_MODE = SYNCHRONOUS_COMMIT, BACKUP_PRIORITY = 50, SECONDARY_ROLE(ALLOW_CONNECTIONS = NO));
 GO
-
-
 
 
 -- See the Availability Group Resource Group in the Windows Cluster
@@ -173,7 +171,8 @@ GO
 
 
 
--- also from a secondary replica availability group you can see that the availability database has a problem
+-- also from a secondary replica availability group dashboard 
+-- you can see that the availability database has a problem
 
 
 
@@ -200,18 +199,23 @@ ALTER DATABASE [MyAGDB1]
 GO
 
 
+-- If you want to do this again using only the GUI, then run teardown script 
+-- up to and including point 5. Create with same settings as above (failover mode automatic
+-- and availability mode synchronous)
+
 
 -- Add (optional) listener to AG
 USE [master]
 GO
 ALTER AVAILABILITY GROUP [MyAG1]
-ADD LISTENER N'MyAG1Listener' 
+ADD LISTENER N'MyAG1Listener'
 (
 --WITH DHCP
--- ON (N'192.168.1.0', N'255.255.255.0'
+-- ON (N'10.0.0.0', N'255.0.0.0'
 WITH IP
 ((N'10.1.0.1', N'255.0.0.0'))
-, PORT=1433);
+, PORT=1433
+);
 GO
 
 

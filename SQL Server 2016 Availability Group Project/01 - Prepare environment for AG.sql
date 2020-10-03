@@ -40,6 +40,15 @@ limitations under the License.
 * 9. Grant connect rights to logins for instance endpoints  *
 ************************************************************/
 
+-- 0.
+/*	
+In GUI look at the Cluster Manager and view how to create a new cluster,
+add nodes, and (if required) show enabling service for always on.
+
+Also show where to configure quorum
+*/
+
+
 -- 1. Create Database Master Keys in Master on each instance
 :CONNECT SERVER2
 USE master

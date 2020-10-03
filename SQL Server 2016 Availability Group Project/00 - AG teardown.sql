@@ -26,7 +26,9 @@ limitations under the License.
 *************************************************************
 * Teardown                                                  *
 *************************************************************
-* Requires switching to SQLCMD mode                         *
+* Requires switching to SQLCMD mode and assumes server2 is  *
+* Primary replica. Worst case scenario you can manually     *
+* teardown AG configuration using SSMS across instances     *
 *                                                           *
 * Code will:                                                *
 * 1. Stop all Always On XE sessions                         * 
@@ -57,7 +59,7 @@ GO
 -- 2. Remove listener
 :CONNECT SERVER2
 ALTER AVAILABILITY GROUP [MyAG1]
-REMOVE LISTENER N'MyAGDB1Listener';
+REMOVE LISTENER N'MyAG1Listener';
 GO
 
 -- 3. Take database out of primary replica ag
@@ -134,42 +136,36 @@ GO
 -- 9. Drop all users from all instances
 :CONNECT SERVER2
 USE master
-DROP USER [AG_server2_user]
 DROP USER [AG_server3_user]
 DROP USER [AG_server4_user]
 GO
 :CONNECT SERVER3
 USE master
 DROP USER [AG_server2_user]
-DROP USER [AG_server3_user]
 DROP USER [AG_server4_user]
 GO
 :CONNECT SERVER4
 USE master
 DROP USER [AG_server2_user]
 DROP USER [AG_server3_user]
-DROP USER [AG_server4_user]
 GO
 
 
 -- 10. Drop all logins from all instances 
 :CONNECT SERVER2
 USE master
-DROP LOGIN [AG_server2_login]
 DROP LOGIN [AG_server3_login]
 DROP LOGIN [AG_server4_login]
 GO
 :CONNECT SERVER3
 USE master
 DROP LOGIN [AG_server2_login]
-DROP LOGIN [AG_server3_login]
 DROP LOGIN [AG_server4_login]
 GO
 :CONNECT SERVER4
 USE master
 DROP LOGIN [AG_server2_login]
 DROP LOGIN [AG_server3_login]
-DROP LOGIN [AG_server4_login]
 GO
 
 

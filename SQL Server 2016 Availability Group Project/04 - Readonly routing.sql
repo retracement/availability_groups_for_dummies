@@ -23,6 +23,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
+
+-- First look in the GUI at the readonly routing
+
+
 -- Set the secondary role read only url for replicas
 ALTER AVAILABILITY GROUP [MyAG1]
 MODIFY REPLICA ON
@@ -44,8 +48,8 @@ N'SERVER4\SQL2016' WITH
 ALTER AVAILABILITY GROUP [MyAG1]
 MODIFY REPLICA ON N'SERVER2\SQL2016'
 WITH (PRIMARY_ROLE(READ_ONLY_ROUTING_LIST=('SERVER3\SQL2016','SERVER4\SQL2016')));
-ALTER AVAILABILITY GROUP [MyAG1]
 
+ALTER AVAILABILITY GROUP [MyAG1]
 MODIFY REPLICA ON N'SERVER3\SQL2016'
 WITH (PRIMARY_ROLE(READ_ONLY_ROUTING_LIST=('SERVER2\SQL2016','SERVER4\SQL2016')));
 
@@ -59,8 +63,10 @@ WITH (PRIMARY_ROLE(READ_ONLY_ROUTING_LIST=('SERVER3\SQL2016','SERVER2\SQL2016'))
 -- not set with read intent
 
 
--- Set all replicas secondary role to read only an view properties again
--- note your settings are now visible
+-- Set all replicas secondary role to allow reads. In otherwords set the Readable
+-- Secondary to yes on each replica. 
+-- You can view AG properties again -- note your settings are now visible
+-- If you do not see the read-only routing list, run that code again and check the GUI
 
 
 -- Play with readonly routing through the Readable secondary test.ps1

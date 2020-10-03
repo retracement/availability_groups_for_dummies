@@ -47,8 +47,10 @@ SELECT @@servername AS 'Instance', sys.fn_hadr_backup_is_preferred_replica(@data
 GO
 
 
--- Look at backup priorites through the properties of the Availability Group
+-- Now look at backup priorites through the properties of the Availability Group
 -- from the primary replica. Note the option for secondary only and what it does.
+
+
 -- Now change the backup priority of replica server3 to 60
 
 
@@ -123,7 +125,7 @@ GO
 -- Look at backup history across replicas
 :CONNECT SERVER2
 SELECT 
-	TOP 3 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
+	TOP 5 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
 	msdb.dbo.backupset.database_name, 
 	msdb.dbo.backupset.backup_start_date, 
 	msdb.dbo.backupset.backup_finish_date, 
@@ -146,7 +148,7 @@ SELECT
 GO
 :CONNECT SERVER3
 SELECT 
-	TOP 3 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
+	TOP 5 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
 	msdb.dbo.backupset.database_name, 
 	msdb.dbo.backupset.backup_start_date, 
 	msdb.dbo.backupset.backup_finish_date, 
@@ -169,7 +171,7 @@ SELECT
 GO
 :CONNECT SERVER4
 SELECT 
-	TOP 3 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
+	TOP 5 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
 	msdb.dbo.backupset.database_name, 
 	msdb.dbo.backupset.backup_start_date, 
 	msdb.dbo.backupset.backup_finish_date, 
